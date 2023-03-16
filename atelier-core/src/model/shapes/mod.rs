@@ -256,6 +256,8 @@ pub enum ShapeKind {
     Structure(StructureOrUnion),
     /// A structure consisting of pairs of shape ids; the name of the member and it's type.
     Union(StructureOrUnion),
+    /// A structure consisting of pairs of shape ids; the name of the member and it's type.
+    Enum(StructureOrUnion),
     /// A shape representing some deployed software service.
     Service(Service),
     /// A shape representing some resource managed by a software service, or a sub-resource of
@@ -513,6 +515,7 @@ impl TopLevelShape {
             }
             ShapeKind::Structure(v) => v.member(member),
             ShapeKind::Union(v) => v.member(member),
+            ShapeKind::Enum(v) => v.member(member),
             ShapeKind::Service(_) => None,
             ShapeKind::Operation(_) => None,
             ShapeKind::Resource(_) => None,

@@ -87,6 +87,7 @@ pub trait ModelVisitor {
     visit_fn! { set, ListOrSet, "Called for each `ShapeKind::Set` in this model's **shapes** collection." }
     visit_fn! { map, Map, "Called for each `ShapeKind::Map` in this model's **shapes** collection." }
     visit_fn! { structure, StructureOrUnion, "Called for each `ShapeKind::Structure` in this model's **shapes** collection." }
+    visit_fn! { m_enum, StructureOrUnion, "Called for each `ShapeKind::Enum` in this model's **shapes** collection." }
     visit_fn! { union, StructureOrUnion, "Called for each `ShapeKind::Union` in this model's **shapes** collection." }
     visit_fn! { service, Service, "Called for each `ShapeKind::Service` in this model's **shapes** collection." }
     visit_fn! { operation, Operation, "Called for each `ShapeKind::Operation` in this model's **shapes** collection." }
@@ -216,6 +217,20 @@ where
                     }
                 }
             }
+            ShapeKind::Enum(body) => {
+                visitor.m_enum(shape.id(), &shape.traits(), &body)?;
+                if let Some(member_visitor) = visitor.member_visitor() {
+                    for member in body.members.values() {
+                        member_visitor.member(
+                            shape.id(),
+                            member.id(),
+                            member.target(),
+                            Some(member.traits()),
+                        )?;
+                    }
+                }
+            }
+
             ShapeKind::Service(body) => {
                 visitor.service(shape.id(), &shape.traits(), &body)?;
                 if let Some(member_visitor) = visitor.member_visitor() {

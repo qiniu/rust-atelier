@@ -60,7 +60,7 @@ use atelier_core::prelude::{
     prelude_namespace_id, PRELUDE_NAMESPACE, TRAIT_DOCUMENTATION, TRAIT_EXTERNALDOCUMENTATION,
 };
 use atelier_core::syntax::{
-    SHAPE_ID_MEMBER_SEPARATOR, SHAPE_LIST, SHAPE_MAP, SHAPE_OPERATION, SHAPE_RESOURCE,
+    SHAPE_ENUM, SHAPE_ID_MEMBER_SEPARATOR, SHAPE_LIST, SHAPE_MAP, SHAPE_OPERATION, SHAPE_RESOURCE,
     SHAPE_SERVICE, SHAPE_SET, SHAPE_STRUCTURE, SHAPE_UNION,
 };
 use somedoc::model::block::{
@@ -165,6 +165,7 @@ fn describe_shape(shape: &TopLevelShape, doc: &mut Document) {
         ShapeKind::Map(_) => SHAPE_MAP.to_string(),
         ShapeKind::Structure(_) => SHAPE_STRUCTURE.to_string(),
         ShapeKind::Union(_) => SHAPE_UNION.to_string(),
+        ShapeKind::Enum(_) => SHAPE_ENUM.to_string(),
         ShapeKind::Service(_) => SHAPE_SERVICE.to_string(),
         ShapeKind::Operation(_) => SHAPE_OPERATION.to_string(),
         ShapeKind::Resource(_) => SHAPE_RESOURCE.to_string(),

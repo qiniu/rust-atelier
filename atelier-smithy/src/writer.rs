@@ -9,8 +9,8 @@ use atelier_core::syntax::{
     MEMBER_COLLECTION_OPERATIONS, MEMBER_CREATE, MEMBER_DELETE, MEMBER_ERRORS, MEMBER_IDENTIFIERS,
     MEMBER_INPUT, MEMBER_KEY, MEMBER_LIST, MEMBER_MEMBER, MEMBER_OPERATIONS, MEMBER_OUTPUT,
     MEMBER_PUT, MEMBER_READ, MEMBER_RESOURCES, MEMBER_UPDATE, MEMBER_VALUE, MEMBER_VERSION,
-    SHAPE_APPLY, SHAPE_LIST, SHAPE_MAP, SHAPE_OPERATION, SHAPE_RESOURCE, SHAPE_SERVICE, SHAPE_SET,
-    SHAPE_STRUCTURE, SHAPE_UNION,
+    SHAPE_APPLY, SHAPE_ENUM, SHAPE_LIST, SHAPE_MAP, SHAPE_OPERATION, SHAPE_RESOURCE, SHAPE_SERVICE,
+    SHAPE_SET, SHAPE_STRUCTURE, SHAPE_UNION,
 };
 
 use crate::syntax::{
@@ -150,6 +150,11 @@ impl SmithyWriter {
                 }
                 ShapeKind::Union(structured) => {
                     writeln!(w, "{} {} {{", SHAPE_UNION, shape.id().shape_name())?;
+                    self.write_members(w, structured.members(), "    ")?;
+                    writeln!(w, "}}")?;
+                }
+                ShapeKind::Enum(structured) => {
+                    writeln!(w, "{} {} {{", SHAPE_ENUM, shape.id().shape_name())?;
                     self.write_members(w, structured.members(), "    ")?;
                     writeln!(w, "}}")?;
                 }

@@ -277,6 +277,7 @@ use std::str::FromStr;
 pub enum Version {
     /// Version 1.0 (initial, and current)
     V10,
+    V20,
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -291,7 +292,10 @@ impl Default for Version {
 
 impl Display for Version {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "1.0")
+        match self {
+            Version::V10 => write!(f, "1.0"),
+            Version::V20 => write!(f, "2.0"),
+        }
     }
 }
 
@@ -299,10 +303,10 @@ impl FromStr for Version {
     type Err = error::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s == "1" || s == "1.0" {
-            Ok(Self::V10)
-        } else {
-            Err(error::ErrorKind::InvalidVersionNumber(Some(s.to_string())).into())
+        match s {
+            "1" | "1.0" => Ok(Self::V10),
+            "2" | "2.0" => Ok(Self::V20),
+            &_ => Err(error::ErrorKind::InvalidVersionNumber(Some(s.to_string())).into()),
         }
     }
 }

@@ -170,6 +170,16 @@ fn from_shape(shape: &TopLevelShape) -> Value {
                     shape_map.insert(ADD_SHAPE_KEY_MEMBERS.to_string(), from_members(v.members()));
             }
         }
+        ShapeKind::Enum(v) => {
+            let _ = shape_map.insert(
+                ADD_SHAPE_KEY_TYPE.to_string(),
+                Value::String(SHAPE_UNION.to_string()),
+            );
+            if v.has_members() {
+                let _ =
+                    shape_map.insert(ADD_SHAPE_KEY_MEMBERS.to_string(), from_members(v.members()));
+            }
+        }
         ShapeKind::Service(v) => {
             let _ = shape_map.insert(
                 ADD_SHAPE_KEY_TYPE.to_string(),

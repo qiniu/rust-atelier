@@ -9,11 +9,12 @@ use atelier_core::model::shapes::{
 };
 use atelier_core::model::values::{Value as NodeValue, ValueMap};
 use atelier_core::model::{Identifier, Model, NamespaceID, ShapeID};
+
 use atelier_core::syntax::{
     MEMBER_COLLECTION_OPERATIONS, MEMBER_CREATE, MEMBER_DELETE, MEMBER_ERRORS, MEMBER_IDENTIFIERS,
     MEMBER_INPUT, MEMBER_KEY, MEMBER_LIST, MEMBER_MEMBER, MEMBER_OPERATIONS, MEMBER_OUTPUT,
     MEMBER_PUT, MEMBER_READ, MEMBER_RENAME, MEMBER_RESOURCES, MEMBER_UPDATE, MEMBER_VALUE,
-    MEMBER_VERSION, MODEL_METADATA, MODEL_SHAPES, SHAPE_APPLY, SHAPE_LIST, SHAPE_MAP,
+    MEMBER_VERSION, MODEL_METADATA, MODEL_SHAPES, SHAPE_APPLY, SHAPE_ENUM, SHAPE_LIST, SHAPE_MAP,
     SHAPE_OPERATION, SHAPE_RESOURCE, SHAPE_SERVICE, SHAPE_SET, SHAPE_STRUCTURE, SHAPE_UNION,
 };
 use atelier_core::Version;
@@ -168,6 +169,15 @@ impl JsonReader {
                     Default::default()
                 };
                 Ok(ShapeKind::Union(StructureOrUnion::with_members(
+                    members.as_slice(),
+                )))
+            } else if s == SHAPE_ENUM {
+                let members = if let Some(Value::Object(vs)) = outer.get(ADD_SHAPE_KEY_MEMBERS) {
+                    self.members(vs)?
+                } else {
+                    Default::default()
+                };
+                Ok(ShapeKind::Enum(StructureOrUnion::with_members(
                     members.as_slice(),
                 )))
             } else if s == SHAPE_SERVICE {

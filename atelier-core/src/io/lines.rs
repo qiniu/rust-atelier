@@ -263,6 +263,14 @@ fn shape_into_strings(shape: &TopLevelShape, strings: &mut Vec<String>) {
             }
             prefix
         }
+        ShapeKind::Enum(v) => {
+            let prefix = line_prefix("enum", shape);
+            strings.push(prefix.clone());
+            for member in v.members() {
+                member_into_strings(&prefix, member, strings);
+            }
+            prefix
+        }
         ShapeKind::Service(v) => {
             let prefix = line_prefix("service", shape);
             strings.push(prefix.clone());

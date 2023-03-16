@@ -102,6 +102,9 @@ pub const SHAPE_STRUCTURE: &str = "structure";
 /// String identifier for the shape `ShapeBody::Union`.
 pub const SHAPE_UNION: &str = "union";
 
+/// String identifier for the shape `ShapeBody::Enum`.
+pub const SHAPE_ENUM: &str = "enum";
+
 // ------------------------------------------------------------------------------------------------
 // Member Names
 // ------------------------------------------------------------------------------------------------
