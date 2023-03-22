@@ -1,0 +1,11 @@
+[package]
+name = "sufy_json2smithy"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+atelier_json = { path="../atelier-json" }
+atelier_core = { path="../atelier-core" }
+atelier_smithy = { path="../atelier-smithy" }

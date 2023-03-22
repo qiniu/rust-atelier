@@ -11,5 +11,6 @@ members = [
     "atelier-rdf",
     "atelier-smithy",
     "atelier-test",
-    "cargo-atelier"
+    "cargo-atelier",
+    "sufy-json2smithy"
     ]
